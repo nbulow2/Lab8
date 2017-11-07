@@ -1,3 +1,5 @@
+
+
 /**
  * Implement a bank class.
  * <p>
@@ -26,9 +28,12 @@ public class Bank {
      * @return boolean
      */
     public boolean withdrawMoney(final BankAccount bankAccount, final double amount) {
-        /*
-         * Implement this function
-         */
+        bankAccount.withdrawl(amount);
+        if (bankAccount.getBalance() < 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -42,9 +47,12 @@ public class Bank {
      * @return boolean
      */
     public boolean depositMoney(final BankAccount bankAccount, final double amount) {
-        /*
-         * Implement this function
-         */
+        bankAccount.deposit(amount);
+        if (bankAccount.getBalance() < 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -61,9 +69,13 @@ public class Bank {
 
     public boolean transferMoney(final BankAccount source, final BankAccount destination,
             final double amount) {
-        /*
-         * Implement this function
-         */
+       source.withdrawl(amount);
+       destination.deposit(amount);
+       if (source.getBalance() < 0 || destination.getBalance() < 0) {
+           return false;
+       } else {
+           return true;
+       }
     }
 
     /**
@@ -74,21 +86,17 @@ public class Bank {
      */
 
     public void changeOwnerName(final BankAccount bankAccount, final String name) {
-        /*
-         * Implement this function
-         */
+        bankAccount.setName(name);
     }
 
-    public static int totalAccounts = 0;
+
     /**
      * Uses static variable to get number of bank accounts opened.
      *
      * @return the total number of accounts
      */
     public static int getNumberOfAccount() {
-        /*
-         * Implement this function
-         */
+        return BankAccount.totalAccounts;
     }
 
     /**
@@ -103,10 +111,10 @@ public class Bank {
         System.out.println("We are excited to have you banking with us!\n\n");
 
         // Create Bank Accounts
-        BankAccount account1 = new BankAccount("John Doe", BankAccountType.CHECKINGS);
+        BankAccount account1 = new BankAccount("John Doe", BankAccount.BankAccountType.CHECKINGS);
         System.out.println("Bank account for John Doe created");
 
-        BankAccount account2 = new BankAccount("Jony Ive", BankAccountType.STUDENT);
+        BankAccount account2 = new BankAccount("Jony Ive", BankAccount.BankAccountType.STUDENT);
         System.out.println("Bank account for Johy Ive created\n\n");
 
         // Deposit money to both accounts and print new balance
@@ -121,6 +129,13 @@ public class Bank {
 
         // Print number of accounts
         System.out.print("Number of active accounts at " + bank.bankName + " are ");
-        System.out.println(Bank.totalAccounts);
+        System.out.println(BankAccount.totalAccounts);
     }
+
+
+
 }
+
+
+
+
